@@ -23,6 +23,7 @@ this is a read me file
 
 [Link Text](https://github.com/VICKIYZ/yzha0265_9103_tut2.gitLinks)
 ![An image of a cat](http://placekitten.com/200/300)
+![An image of the Mona Lisa](readmeImages/Mona_Lisa_by_Leonardo_da_Vinci_500_x_700.jpg)
 
 ```
 function helloWorld() {
