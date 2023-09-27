@@ -10,4 +10,5 @@
 ### Loops will be useful in implementing the desired movement. We need to define functions and use loops to constrain positions and colours, to implement intereations from users, and to draw on the canvas. Our work requires repetition in some areas which can be achieved using loops. 
 
 ![A cinemagraph of a waterfall](https://github.com/text2cinemagraph/text2cinemagraph/blob/master/assets/video.gif?raw=true)
+
 [Inspiration from python](https://github.com/text2cinemagraph/text2cinemagraph/blob/5e59462640876fb16e1f8e39ee207b21b28af8c0/test_motion.py)
