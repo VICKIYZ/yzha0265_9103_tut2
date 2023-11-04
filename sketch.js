@@ -4,22 +4,27 @@ let stems = [];
 let leave = [];
 let smallerleave = [];
 let angle = -45
+let angle1 = 0
 let x1 = 0 
 let y1 = 0
 let x2 = 0
 let y2 = 0  
+let y5 = 0
 let ySpeed1 = 20;
 let ySpeed2 = 30;
+let ySpeed3 = 10;
+let ySpeed4 = 5;
+let Speed = 5
 let PosY1 = 200;
-let PosY3 = 220;
-let PosY4 = 600;
-let PosY5 = 400;
+let PosY2 = 220;
+let PosY3 = 600;
+let PosY4 = 400;
 
 function setup() {
-  createCanvas(windowHeight / 2, windowHeight);
+  createCanvas(300, 600);
   
   background(242,169,4); 
-
+  
 
   //Setting attributes for the stem objects that represent huge leaves' stems
   stems = [
@@ -74,14 +79,6 @@ function setup() {
     new Small(220, 490, color(0, 0, 0), -1, 6)
   ];
   LeftcornerGrass = new Small(0, 0, color(0, 0, 0), -1, 12, 3, 80, 5);
-  //RoundGrass = [
-  //  new Small(95, 200, color(0, 0, 0), 2, 8, 3, 25, 5),
-  //  new Small(90, 205, color(255, 0, 0), 2, 8, 3, 25, 5),
-  //  new Small(230, 220, color(220, 79, 180), 2, 7),
-  //  new Small(225, 220, color(0, 0, 0), 2, 7),
-  //  new Small(205, 600, color(255, 0, 0), 2, 14, 3, 25, 5),
-  //  new Small(120, 400, color(220, 79, 180), 2, 16, 3, 30, 20),
-  //]
   Smallgrass1 = new Small(0 , 0, color(0, 0, 0), 2, 8, 3, 25, 5),
   Smallgrass2 = new Small(0, 0, color(255, 0, 0), 2, 8, 3, 25, 5),
   Smallgrass3 = new Small(0, 0, color(220, 79, 180), 2, 7),
@@ -107,7 +104,6 @@ function draw() {
     let x = random(width);
     let y = random(height);
     let size = random(5, 8);
-    
     if (random(1) > 0.5) {
       fill(214, 139, 168);  
     } else {
@@ -116,16 +112,113 @@ function draw() {
     noStroke();
     ellipse(x, y, size);
   }
+
   
+  push();
+  translate(x1 , y1);
+  rotate(angle);
+  LeftcornerGrass.display();
+  for (let stem of stems) {
+    stem.display();
+  }
+  
+  for (let sLeaf of smallerLeave) {
+    sLeaf.display();
+  }
+  
+  for (let leaf of leave) {
+    leaf.display();
+  }
+  pop();
+  if (frameCount % 50 == 0){
+    x1 = 0
+    y1 = 0
+    angle = radians(-80)
+  }
+  x1 += random(-5, 2)
+  y1 += random(2)
+  angle += radians(2);
+  
+  push()
+  translate(x2, y2);
+  rotate(angle1);
+  for (let rgrass of RightedgeGrass) {
+    rgrass.display();
+  }
+  for (let rgrass of smallerGrass){
+    rgrass.display();
+  }
+  pop()
+  x2 += random(-15);
+  y2 += random(10)
+  angle1 += radians(5)
+  if (x2 < 0 || x2 > 300){
+    x2 -= random(-15)
+  }
+  if (y2 < 0 || y2 > 600){
+    y2 -= random(15)
+  }
+  
+  
+  //Set the round shaped small grass to rotate by their center whith different speed
+  push()
+  translate (95, PosY1);
+  rotate(angle1 * 8)
+  Smallgrass1.display();
+  pop()
+  push()
+  translate(90, PosY1 -5);
+  rotate(angle1 * 8)
+  Smallgrass2.display();
+  pop()
+  PosY1 += ySpeed1;
+  if (PosY1 < 0 || PosY1 > windowHeight){
+    ySpeed1 = - ySpeed1;
+  }
+  
+  push()
+  translate(230, PosY2);
+  rotate(angle1 * 10)
+  Smallgrass3.display();
+  pop()
+  
+  push()
+  translate(225, PosY2);
+  rotate(angle1 * 10)
+  Smallgrass4.display();
+  pop()
+  PosY2 += ySpeed2;
+  if (PosY2 < 0 || PosY2 > windowHeight){
+    ySpeed2 = - ySpeed2;
+  }
+  push()
+  translate(205, PosY3);
+  rotate(angle1 * 5)
+  Smallgrass5.display();
+  pop()
+  PosY3 += ySpeed3;
+  if (PosY3 < 0 || PosY3 > windowHeight){
+    ySpeed3 = - ySpeed3;
+  }
+  
+  push()
+  translate(120, PosY4);
+  rotate(angle1 * 3)
+  Smallgrass6.display();
+  pop()
+  PosY4 += ySpeed4;
+  if (PosY4 < 0 || PosY4 > windowHeight){
+    ySpeed4 = - ySpeed4;
+  }
+  
+  push ()
+  translate(0, y5)
   //Calling functions to draw three huge grass 
   grass();
   grass1();
   grass2();
   FlippedGrass();
   FlippedGrass1();
-  //Calling functions to draw the weeds at the botton left corner and top right edge
-  StraightWeeds();
-  CurvedWeeds();
   
   //Draw the branch of the first huge grass
   stroke(79, 21, 27);
@@ -152,109 +245,16 @@ function draw() {
   //Draw the third roots of the huge grass
   fill(229, 82, 139);  
   ellipse(115, 455, 45, 30);  
-  
-
-  
-  push()
-  translate(x1, y1);
-  //Display all the class object that were setup in setup function
-  for (let grass of smallerGrass) {
-    grass.display();
-  }
+  //Calling functions to draw the weeds at the botton left corner and top right edge
+  StraightWeeds();
+  CurvedWeeds();
   pop()
-  
-  
-  push();
-  translate(x1 , y1);
-  rotate(angle);
-  LeftcornerGrass.display();
-    for (let stem of stems) {
-      stem.display();
-    }
-    
-    for (let sLeaf of smallerLeave) {
-      sLeaf.display();
-    }
-    
-    for (let leaf of leave) {
-      leaf.display();
-    }
-    pop();
-    if (frameCount % 50 == 0){
-      x1 = 0
-      y1 = 0
-      angle = radians(-80)
-    }
-    x1 += random(-5, 2)
-    y1 += random(2)
-    angle += radians(2);
-
-    let angle1 = angle + radians(45)
-    push()
-    translate(x2, y2);
-    rotate(angle1);
-    for (let rgrass of RightedgeGrass) {
-      rgrass.display();
-      }
-    pop()
-    x2 += random(-15, 15);
-    y2 += random(5)
-
-    //Set the round shaped small grass to rotate by their center whith different speed
-    push()
-    translate (95, PosY1);
-    rotate(angle1 * 8)
-    Smallgrass1.display();
-    pop()
-
-    push()
-    translate(90, PosY1 -5);
-    rotate(angle1 * 8)
-    Smallgrass2.display();
-    pop()
-    PosY1 += ySpeed1;
-    if (PosY1 < 0 || PosY1 > windowHeight){
-      ySpeed1 = - ySpeed1;
-    }
-
-    push()
-    translate(230, PosY3);
-    rotate(angle1 * 10)
-    Smallgrass3.display();
-    pop()
-    
-    push()
-    translate(225, PosY3);
-    rotate(angle1 * 10)
-    Smallgrass4.display();
-    pop()
-    PosY3 += ySpeed2;
-    if (PosY3 < 0 || PosY3 > windowHeight){
-      ySpeed2 = - ySpeed2;
-    }
-
-    push()
-   
-    translate(205, PosY4);
-    rotate(angle1 * 5)
-    Smallgrass5.display();
-    pop()
-    if (PosY4 = windowHeight){
-      ySpeed = -2
-    }
-                            
-    push()
-   
-    translate(120, PosY5);
-    rotate(angle1 * 3)
-    Smallgrass6.display();
-    pop()
-    if (PosY5 = windowHeight){
-      ySpeed = -2
-    }
-
-    
+  y5 += Speed
+  if (y5 < 0 || y5 > 50){
+    Speed = - Speed
   }
+
+}
 
 // Draw the first huge grass
 function grass() {
@@ -398,7 +398,7 @@ function StraightWeeds() {
   let numWeeds = 20;
   let weedSpacing = 9;
   let weedWidth;
-  let minWeedHeight = 20;
+  let minWeedHeight = 5;
   let maxWeedHeight = 50;
 
   // Use a for loop to give some randomness to color setting of the weeds
@@ -645,3 +645,6 @@ class Smallerleave {
     }
   }
 }
+
+
+
