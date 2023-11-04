@@ -1,4 +1,4 @@
-let numDots = 700;
+let numDots = 100;
 let smallerGrass = [];
 let stems = [];
 let leave = [];
@@ -19,6 +19,8 @@ let PosY1 = 200;
 let PosY2 = 220;
 let PosY3 = 600;
 let PosY4 = 400;
+let w = 40;
+let h = 30
 
 function setup() {
   createCanvas(300, 600);
@@ -98,12 +100,12 @@ function setup() {
 function draw() {
   background(242,169,4); 
   frameRate(5);
-  
+
   //Draw the pink and black dots
   for (let i = 0; i < numDots; i++) {
     let x = random(width);
     let y = random(height);
-    let size = random(5, 8);
+    let size = random(20);
     if (random(1) > 0.5) {
       fill(214, 139, 168);  
     } else {
@@ -113,7 +115,53 @@ function draw() {
     ellipse(x, y, size);
   }
 
+  push ()
+  translate(0, y5)
+  //Calling functions to draw three huge grass 
+  grass();
+  grass1();
+  grass2();
+  FlippedGrass();
+  FlippedGrass1();
   
+  //Draw the branch of the first huge grass
+  stroke(79, 21, 27);
+  line(190, 80, 220, 220);
+  
+  //Draw the first roots of the huge grass
+  noStroke();
+  fill(183, 90, 125);  
+  ellipse(190, 90, w, h);  
+  
+  //Draw the second roots of the huge grass
+  fill(196, 85, 135);  
+  ellipse(150, 320, w, h + 5);
+  
+  fill(105, 46, 76);  
+  ellipse(150, 320, w - 5, h);
+  
+  fill(252, 105, 155); 
+  ellipse(150, 320, w - 10, h - 5);  
+  
+  fill(82, 25, 50); 
+  ellipse(150, 320, w - 15, h -10);
+  
+  //Draw the third roots of the huge grass
+  fill(229, 82, 139);  
+  ellipse(115, 455, w + 5, h);  
+  w += Speed / 2;
+  h += 0.875 * Speed / 2;
+
+  //Calling functions to draw the weeds at the botton left corner and top right edge
+  StraightWeeds();
+  CurvedWeeds();
+  pop()
+  y5 += Speed
+  if (y5 < 0 || y5 > 50){
+    Speed = - Speed
+  }
+
+  pop()
   push();
   translate(x1 , y1);
   rotate(angle);
@@ -211,48 +259,7 @@ function draw() {
     ySpeed4 = - ySpeed4;
   }
   
-  push ()
-  translate(0, y5)
-  //Calling functions to draw three huge grass 
-  grass();
-  grass1();
-  grass2();
-  FlippedGrass();
-  FlippedGrass1();
-  
-  //Draw the branch of the first huge grass
-  stroke(79, 21, 27);
-  line(190, 80, 220, 220);
-  
-  //Draw the first roots of the huge grass
-  noStroke();
-  fill(183, 90, 125);  
-  ellipse(190, 90, 40, 30);  
-  
-  //Draw the second roots of the huge grass
-  fill(196, 85, 135);  
-  ellipse(150, 320, 40, 35);
-  
-  fill(105, 46, 76);  
-  ellipse(150, 320, 35, 30);
-  
-  fill(252, 105, 155); 
-  ellipse(150, 320, 30, 25);  
-  
-  fill(82, 25, 50); 
-  ellipse(150, 320, 25, 20);
-  
-  //Draw the third roots of the huge grass
-  fill(229, 82, 139);  
-  ellipse(115, 455, 45, 30);  
-  //Calling functions to draw the weeds at the botton left corner and top right edge
-  StraightWeeds();
-  CurvedWeeds();
-  pop()
-  y5 += Speed
-  if (y5 < 0 || y5 > 50){
-    Speed = - Speed
-  }
+
 
 }
 
@@ -391,6 +398,7 @@ function grass2() {
  
      bezier(x1, y1, x2, y2, x3, y3, x4, y4);
     }
+    
 }
 
 // Function of the straight weeds
