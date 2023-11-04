@@ -3,23 +3,38 @@ let smallerGrass = [];
 let stems = [];
 let leave = [];
 let smallerleave = [];
+let angle = -45
+let x1 = 0 
+let y1 = 0
+let x2 = 0
+let y2 = 0  
+let ySpeed1 = 20;
+let ySpeed2 = 30;
+let PosY1 = 200;
+let PosY3 = 220;
+let PosY4 = 600;
+let PosY5 = 400;
 
 function setup() {
-  createCanvas(300, 600);
+  createCanvas(windowHeight / 2, windowHeight);
+  
   background(242,169,4); 
 
 
+  //Setting attributes for the stem objects that represent huge leaves' stems
   stems = [
     new stem(0, 140, 80, 140, 150, 150, 0, 0, 0),
     new stem(0, 300, 25, 310, 50, 335, 0, 0, 0),
     new stem(160, 450, 220, 380, 240, 340, 0, 0, 0)
   ];
 
+  //Setting attributes for the Leave objects that represent huge leaves' blade 
   leave = [
     new Leave(30, 140, 45, 120, 75, 105, 19, 18, 19, 1, 4, 6, 0, 0, 0),
     new Leave(20, 138, 35, 145, 50, 155, 19, 18, 19, 1, 4, 6, 0, 0, 0)
   ];
-  
+
+  //Setting attributes for the Smallerleave objects that represent huge leaves' blade
   smallerLeave = [
     new Smallerleave(35, 140, 65, 120, 80, 110, 27, 20, 19, 2, 5, 6, color(209, 79, 127)),
     new Smallerleave(25, 140, 45, 140, 80, 160, 27, 21, 19, 2, 5, 6, color(209, 79, 127)),
@@ -33,24 +48,17 @@ function setup() {
     new Smallerleave(185, 420, 220, 410, 250, 385, 10, 7, 4, -14, -14, -13, 0, 0, 0),
   ];
 
+  //Setting attributes for the Small objects that represent small flower looked grass
   smallerGrass = [
-    new Small(0, 0, color(0, 0, 0), -1, 12, 3, 80, 5),
-    new Small(0, 180, color(0, 0, 0), -1, 7, 3, 25, 5),
+    //new Small(0, 180, color(0, 0, 0), -1, 7, 3, 25, 5),
     new Small(5, 230, color(0, 0, 0), -1, 8, 3, 40, 10),
     new Small(5, 400, color(0, 0, 0), -1, 8, 3, 40, 10),
     new Small(10, 400, color(209, 79, 127), -1, 7, 3, 40, 10),
     new Small(10, 230, color(209, 79, 127), -1, 7, 3, 40, 10),
-    new Small(95, 200, color(0, 0, 0), 2, 8, 3, 25, 5),
-    new Small(90, 205, color(255, 0, 0), 2, 8, 3, 25, 5),
     new Small(192, 153, color(255, 0, 0)),
     new Small(205, 150, color(255, 0, 0)),
     new Small(192, 153, color(255, 0, 0)),
-    new Small(230, 220, color(220, 79, 180), 2, 7),
-    new Small(225, 220, color(0, 0, 0), 2, 7),
     new Small(270, 180, color(0, 0, 0), 1, 6),
-    new Small(290, 240, color(0, 0, 0)),
-    new Small(295, 240, color(209, 79, 127)),
-    new Small(300, 240, color(255, 0, 0)),
     new Small(290, 290, color(0, 0, 0)),
     new Small(295, 290, color(209, 79, 127)),
     new Small(300, 290, color(255, 0, 0)),
@@ -61,25 +69,45 @@ function setup() {
     new Small(300, 500, color(0, 0, 0), 1, 5),
     new Small(300, 540, color(0, 0, 0), 1, 5),
     new Small(270, 580, color(0, 0, 0), 1, 5),
-    new Small(205, 600, color(255, 0, 0), 2, 14, 3, 25, 5),
     new Small(80, 350, color(255, 0, 0), -1.5, 10, 3, 20, 10),
-    new Small(120, 400, color(220, 79, 180), 2, 16, 3, 30, 20),
     new Small(260, 430, color(107, 33, 33), 1, 8),
     new Small(220, 490, color(0, 0, 0), -1, 6)
   ];
-}
+  LeftcornerGrass = new Small(0, 0, color(0, 0, 0), -1, 12, 3, 80, 5);
+  //RoundGrass = [
+  //  new Small(95, 200, color(0, 0, 0), 2, 8, 3, 25, 5),
+  //  new Small(90, 205, color(255, 0, 0), 2, 8, 3, 25, 5),
+  //  new Small(230, 220, color(220, 79, 180), 2, 7),
+  //  new Small(225, 220, color(0, 0, 0), 2, 7),
+  //  new Small(205, 600, color(255, 0, 0), 2, 14, 3, 25, 5),
+  //  new Small(120, 400, color(220, 79, 180), 2, 16, 3, 30, 20),
+  //]
+  Smallgrass1 = new Small(0 , 0, color(0, 0, 0), 2, 8, 3, 25, 5),
+  Smallgrass2 = new Small(0, 0, color(255, 0, 0), 2, 8, 3, 25, 5),
+  Smallgrass3 = new Small(0, 0, color(220, 79, 180), 2, 7),
+  Smallgrass4 = new Small(0, 0, color(0, 0, 0), 2, 7),
+  Smallgrass5 = new Small(0, 0, color(255, 0, 0), 2, 14, 3, 25, 5),
+  Smallgrass6 = new Small(0, 0, color(220, 79, 180), 2, 16, 3, 30, 20),
+  
+  RightedgeGrass = [
+    new Small(300, 240, color(255, 0, 0)),
+    new Small(290, 240, color(0, 0, 0)),
+    new Small(295, 240, color(209, 79, 127))
+  ]
+} 
+
 
 
 function draw() {
   background(242,169,4); 
-  frameRate(1);
-
-  // draw the pink and black dots
+  frameRate(5);
+  
+  //Draw the pink and black dots
   for (let i = 0; i < numDots; i++) {
     let x = random(width);
     let y = random(height);
     let size = random(5, 8);
-      
+    
     if (random(1) > 0.5) {
       fill(214, 139, 168);  
     } else {
@@ -88,28 +116,30 @@ function draw() {
     noStroke();
     ellipse(x, y, size);
   }
-
+  
+  //Calling functions to draw three huge grass 
   grass();
   grass1();
   grass2();
   FlippedGrass();
   FlippedGrass1();
+  //Calling functions to draw the weeds at the botton left corner and top right edge
   StraightWeeds();
   CurvedWeeds();
-
-  // draw the branch of the first huge grass
+  
+  //Draw the branch of the first huge grass
   stroke(79, 21, 27);
   line(190, 80, 220, 220);
-
-  // draw the first roots of the huge grass
+  
+  //Draw the first roots of the huge grass
   noStroke();
   fill(183, 90, 125);  
   ellipse(190, 90, 40, 30);  
-
-  //draw the second roots of the huge grass
+  
+  //Draw the second roots of the huge grass
   fill(196, 85, 135);  
   ellipse(150, 320, 40, 35);
-
+  
   fill(105, 46, 76);  
   ellipse(150, 320, 35, 30);
   
@@ -118,27 +148,113 @@ function draw() {
   
   fill(82, 25, 50); 
   ellipse(150, 320, 25, 20);
-
-  //draw the third roots of the huge grass
+  
+  //Draw the third roots of the huge grass
   fill(229, 82, 139);  
   ellipse(115, 455, 45, 30);  
   
+
+  
+  push()
+  translate(x1, y1);
+  //Display all the class object that were setup in setup function
   for (let grass of smallerGrass) {
     grass.display();
   }
-
-  for (let stem of stems) {
-    stem.display();
-  }
+  pop()
   
-  for (let sLeaf of smallerLeave) {
-    sLeaf.display();
-  }
+  
+  push();
+  translate(x1 , y1);
+  rotate(angle);
+  LeftcornerGrass.display();
+    for (let stem of stems) {
+      stem.display();
+    }
+    
+    for (let sLeaf of smallerLeave) {
+      sLeaf.display();
+    }
+    
+    for (let leaf of leave) {
+      leaf.display();
+    }
+    pop();
+    if (frameCount % 50 == 0){
+      x1 = 0
+      y1 = 0
+      angle = radians(-80)
+    }
+    x1 += random(-5, 2)
+    y1 += random(2)
+    angle += radians(2);
 
-  for (let leaf of leave) {
-    leaf.display();
+    let angle1 = angle + radians(45)
+    push()
+    translate(x2, y2);
+    rotate(angle1);
+    for (let rgrass of RightedgeGrass) {
+      rgrass.display();
+      }
+    pop()
+    x2 += random(-15, 15);
+    y2 += random(5)
+
+    //Set the round shaped small grass to rotate by their center whith different speed
+    push()
+    translate (95, PosY1);
+    rotate(angle1 * 8)
+    Smallgrass1.display();
+    pop()
+
+    push()
+    translate(90, PosY1 -5);
+    rotate(angle1 * 8)
+    Smallgrass2.display();
+    pop()
+    PosY1 += ySpeed1;
+    if (PosY1 < 0 || PosY1 > windowHeight){
+      ySpeed1 = - ySpeed1;
+    }
+
+    push()
+    translate(230, PosY3);
+    rotate(angle1 * 10)
+    Smallgrass3.display();
+    pop()
+    
+    push()
+    translate(225, PosY3);
+    rotate(angle1 * 10)
+    Smallgrass4.display();
+    pop()
+    PosY3 += ySpeed2;
+    if (PosY3 < 0 || PosY3 > windowHeight){
+      ySpeed2 = - ySpeed2;
+    }
+
+    push()
+   
+    translate(205, PosY4);
+    rotate(angle1 * 5)
+    Smallgrass5.display();
+    pop()
+    if (PosY4 = windowHeight){
+      ySpeed = -2
+    }
+                            
+    push()
+   
+    translate(120, PosY5);
+    rotate(angle1 * 3)
+    Smallgrass6.display();
+    pop()
+    if (PosY5 = windowHeight){
+      ySpeed = -2
+    }
+
+    
   }
-}
 
 // Draw the first huge grass
 function grass() {
@@ -149,7 +265,8 @@ function grass() {
   let numCurves = 8; 
   let lineLength = 120; 
   let curveAmount = 40; 
- 
+  
+  //Use a for loop to give some randomness to color setting of the curves
   for (let i = 0; i < numCurves; i++) {
     if (random(1) > 0.2) {
       stroke(209, 79, 127);  
@@ -158,7 +275,6 @@ function grass() {
      }
 
      let angle = map(i, 0, numCurves, 0, -HALF_PI);  
-     
      let x1 = ellipseCenterX;
      let y1 = ellipseCenterY;
      let x2 = x1 + curveAmount * sin(angle);
@@ -172,16 +288,16 @@ function grass() {
   }
 }
 
+//Flip the first half of the huge grass to form the other half
 function FlippedGrass() {
   push();  
- 
   translate(375, 10);
   scale(-1, 1);
   grass(); 
   pop();  
 }
 
-// Draw the second huge grass
+//Similarlly to he first huge grass, draw the second huge grass
 function grass1() {
   noFill();
   strokeWeight(4);
@@ -193,6 +309,7 @@ function grass1() {
   let steps = 8;
   let dotSize = 5;
 
+  //Use a for loop to give some randomness to color setting of the curves
   for (let i = 0; i < numCurves; i++) {
     if (random(1) > 0.5) {
       stroke(209, 79, 127);  
@@ -213,7 +330,7 @@ function grass1() {
  
     bezier(x1, y1, x2, y2, x3, y3, x4, y4);  
 
-  // add the red dots align the grass line
+  // Add the red dots align the grass line
     fill(255, 0, 0);  
     noStroke();  
     for (let j = 0; j <= steps; j++) {
@@ -233,7 +350,7 @@ function grass1() {
     }
   }
 }
-
+// Flip the secound huge grass as well
 function FlippedGrass1() {
   push();  
  
@@ -253,6 +370,7 @@ function grass2() {
     let lineLength = 100; 
     let curveAmount = 40; 
  
+   //Use a for loop to give some randomness to color setting of the curves
    for (let i = 0; i < numCurves; i++) {
     if (random(1) > 0.3) {
       stroke(209, 79, 127);  
@@ -275,6 +393,7 @@ function grass2() {
     }
 }
 
+// Function of the straight weeds
 function StraightWeeds() {
   let numWeeds = 20;
   let weedSpacing = 9;
@@ -282,7 +401,7 @@ function StraightWeeds() {
   let minWeedHeight = 20;
   let maxWeedHeight = 50;
 
-  // Drawing straight weeds on the bottom and right
+  // Use a for loop to give some randomness to color setting of the weeds
   for (let i = 0; i <= numWeeds; i++) {
     weedWidth = random(2,4);
     if (random(1) > 0.4) {
@@ -290,8 +409,9 @@ function StraightWeeds() {
     } else {
       stroke(0);
     }
-    strokeWeight(weedWidth);
 
+    //Setting the stroke attribute using the pre-set values and locate the weeds
+    strokeWeight(weedWidth);
     let x = i * weedSpacing;
     x = constrain(x, 0, 180);
     let weedHeight = random(minWeedHeight, maxWeedHeight);
@@ -325,6 +445,7 @@ function CurvedWeeds() {
   let maxWeedHeight = 60;
   let controlOffset = 20;
 
+  //Use a for loop to give some randomness to color setting of the curves
   for (let i = 0; i <= numWeeds; i++) {
     if (random(1) > 0.2) {
       stroke(179, 70, 105);
@@ -335,7 +456,7 @@ function CurvedWeeds() {
 
     // Drawing curved weeds on the bottom
     let x = i * weedSpacing;
-    x = constrain(x, 0, 180);
+    //x = constrain(x, 0, 180);
     let weedHeight = random(minWeedHeight, maxWeedHeight);
     let ctrlPt1X = constrain(x + random(-controlOffset, controlOffset), 0, width);
     let ctrlPt2X = constrain(x + random(-controlOffset, controlOffset), 0, width);
@@ -343,7 +464,7 @@ function CurvedWeeds() {
 
     // Drawing curved weeds on the left
     let y1 = 450 + i * weedSpacing / 2 ;
-    y1 = constrain(y1, 450, height - 30);
+    //y1 = constrain(y1, 450, height - 30);
     weedHeight = random(20, 30);
     let ctrlPtY1 = constrain(y1 + random(-controlOffset, controlOffset), 0, height);
     let ctrlPtY2 = constrain(y1 + random(-controlOffset, controlOffset), 0, height);
@@ -351,7 +472,7 @@ function CurvedWeeds() {
 
     // Drawing curved weeds on the right
     let y2 = 100 + i * weedSpacing / 2;
-    y2 = constrain(y2, 100, 200);
+    //y2 = constrain(y2, 100, 200);
     weedHeight = random(15, 20);
     let ctrlPtY3 = constrain(y2 + random(-controlOffset, controlOffset), 0, height);
     let ctrlPtY4 = constrain(y2 + random(-controlOffset, controlOffset), 0, height);
@@ -360,7 +481,11 @@ function CurvedWeeds() {
 }
 
 class stem {
-  constructor(SX1, SY1, SX2, SY2, SX3, SY3, sColor, tX1, tY1, sAngle){
+  //Using constructor to set the parameters.
+  //(SX1, SY1), (SX2, SY2) and (SX3, SY3) represents the coordinates that will be used in curveVertex() method
+  //sColor stands for stem color which will be passed to stroke color
+  //tX1, tY1 and sAngle are planed for translate coordinates and rotation angle
+  constructor(SX1, SY1, SX2, SY2, SX3, SY3, sColor){;  // tX1, tY1, sAngle){
     this.SX1 = SX1;
     this.SY1 = SY1;
     this.SX2 = SX2;
@@ -368,11 +493,12 @@ class stem {
     this.SX3 = SX3;
     this.SY3 = SY3;
     this.sColor = sColor;
-    this.tX1 = tX1;
-    this.tY1 = tY1;
-    this.sAngle = sAngle
+    //this.tX1 = tX1;
+    //this.tY1 = tY1;
+    //this.sAngle = sAngle
   }
   display(){
+    //Using curveVertex() method for the leave blade
     push()
     translate(this.tX1, this.tY1)
     fill(0);
@@ -430,10 +556,20 @@ class Small {
       endShape();
     }
   }
+  move(){
+    translate(this.x, this.y)
+    rotate(angle)
+  }
 }
 
 class Leave {
-  constructor(LX1, LY1, LX2, LY2, LX3, LY3, numA, numB, numC, numD, numE, numF, lColor, tX2, tY2, lAngle){
+  //Using constructor to set the parameters.
+  //(LX1, LY1), (LX2, LY2) and (LX3, LY3) represents the coordinates that will be used in curveVertex() method
+  //numA, numB and numC are used to vary the x coordinates for the three main points
+  //numD, numE and numF are used to vary the y coordinates for the three main points
+  //lColor stands for leave color which will be passed to stroke color
+  //tX2, tY2 and lAngle are planed for translate coordinates and rotation angle
+  constructor(LX1, LY1, LX2, LY2, LX3, LY3, numA, numB, numC, numD, numE, numF, lColor){  //tX2, tY2, lAngle){
     this.LX1 = LX1;
     this.LY1 = LY1;
     this.LX2 = LX2;
@@ -447,9 +583,9 @@ class Leave {
     this.numE = numE;
     this.numF = numF;
     this.lColor = lColor;
-    this.tX2 = tX2;
-    this.tY2 = tY2;
-    this.lAngle = lAngle
+    //this.tX2 = tX2;
+    //this.tY2 = tY2;
+    //this.lAngle = lAngle
   }
 
   display() {
@@ -472,7 +608,8 @@ class Leave {
 }
 
 class Smallerleave {
-  constructor(sX1, sY1, sX2, sY2, sX3, sY3, num1, num2, num3, num4, num5, num6, ColorS, tX3, tY3, AngleS){
+  //Similar parameters like leave object except less curve will be made
+  constructor(sX1, sY1, sX2, sY2, sX3, sY3, num1, num2, num3, num4, num5, num6, ColorS){ // tX3, tY3, AngleS){
     this.sX1 = sX1;
     this.sY1 = sY1;
     this.sX2 = sX2;
@@ -486,9 +623,9 @@ class Smallerleave {
     this.num5 = num5;
     this.num6 = num6;
     this.ColorS = ColorS;
-    this.tX3 = tX3;
-    this.tY3 = tY3;
-    this.AngleS = AngleS
+    //this.tX3 = tX3;
+    //this.tY3 = tY3;
+    //this.AngleS = AngleS
   }
   display(){
     for (let i = 0; i < 5; i++) {
